@@ -1,0 +1,36 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: airo_app
+        volumes:
+            - ./:/var/www/html
+        depends_on:
+            - database
+
+    nginx:
+        image: nginx
+        container_name: airo_nginx
+        ports:
+            - "8080:80"
+        volumes:
+            - ./.docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./:/var/www/html
+        depends_on:
+            - app
+    database:
+        image: mariadb:11.7.2
+        container_name: airo_db
+        environment:
+            MYSQL_DATABASE: airo
+            MYSQL_USER: airo
+            MYSQL_PASSWORD: 12345678
+            MYSQL_ROOT_PASSWORD: 12345678
+        volumes:
+            - db_data:/var/lib/mysql
+        ports:
+            - "3307:3306"
+
+volumes:
+    db_data:
