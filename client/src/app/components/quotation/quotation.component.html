@@ -1,0 +1,37 @@
+<form [formGroup]="quotationForm" (ngSubmit)="onSubmit()">
+  @if (formError()) {
+  <p>{{ formError() }}</p>
+  }
+
+  <fieldset formArrayName="ages">
+    <legend>Age(s)</legend>
+    @for (age of ages.controls; track age; let i = $index) {
+    <label for="age-{{ i }}">Age #{{ i }}</label>
+    <input
+      type="text"
+      id="age-{{ i }}"
+      [formControlName]="i"
+      inputmode="numeric"
+    />
+    <button type="button" (click)="removeAge(i)">Remove</button>
+    }
+    <button type="button" (click)="addAge()">Add age</button>
+  </fieldset>
+
+  <label for="currency">Currency</label>
+  <select id="currency" formControlName="currency_id">
+    @for (currency of currencies().data; track currency.id) {
+    <option [value]="currency.id" selected>
+      {{ currency.id }}
+    </option>
+    }
+  </select>
+
+  <label for="start_date">Start date</label>
+  <input type="date" id="start_date" formControlName="start_date" />
+
+  <label for="end_date">End date</label>
+  <input type="date" id="end_date" formControlName="end_date" />
+
+  <button type="submit">Submit</button>
+</form>
