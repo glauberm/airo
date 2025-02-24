@@ -45,7 +45,7 @@ export class LoginComponent {
           this.router.navigate(['']);
         },
         error: (error) => {
-          this.formError.set(error.error.message);
+          this.formError.set(error.error.error);
         },
       });
     }
