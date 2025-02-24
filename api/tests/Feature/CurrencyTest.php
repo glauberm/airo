@@ -20,4 +20,13 @@ class CurrencyTest extends TestCase
 
         $response->assertOk();
     }
+
+    public function test_currency_list_guard(): void
+    {
+        $this->seed(CurrencySeeder::class);
+
+        $response = $this->getJson('/currencies');
+
+        $response->assertUnauthorized();
+    }
 }

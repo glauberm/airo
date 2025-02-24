@@ -19,7 +19,7 @@ abstract class TestCase extends BaseTestCase
         ]);
 
         return $this->withHeaders([
-            'Authorization' => 'Bearer ' . $response->json('token'),
+            'Authorization' => 'Bearer '.$response->json('token'),
         ]);
     }
 }

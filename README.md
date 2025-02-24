@@ -8,34 +8,23 @@ Build and start the containers:
 docker compose up
 ```
 
-Get inside the `airo_api` container:
+Install the API dependencies:
 
 ```
-docker exec -it airo_api bash
-```
-
-Install the dependencies:
+docker exec -it airo_api composer install
 
 ```
-composer install
-```
 
-Exit the `airo_api` container or open a new terminal and get inside the `airo_client` container:
+Install the client dependencies:
 
 ```
-docker exec -it airo_client bash
-```
-
-Install the dependencies:
-
-```
-npm install
+docker exec -it airo_client npm install
 ```
 
 Build the client assets:
 
 ```
-npm run build
+docker exec -it airo_client npm run build
 ```
 
 Visit [localhost:8081](http://localhost:8081/). (For the API, [localhost:8080](http://localhost:8080/)).
@@ -45,16 +34,16 @@ Visit [localhost:8081](http://localhost:8081/). (For the API, [localhost:8080](h
 For the API:
 
 ```
-# from inside the `airo_api` container
-./vendor/bin/phpunit
+docker exec -it airo_api vendor/bin/phpunit
 ```
 
 For the client:
 
 ```
-# from inside the `airo_client` container
-npm run test
+docker exec -it airo_client npm run test
 ```
+
+Visit [localhost:9876](http://localhost:9876/) to access Karma server.
 
 ## Running the development servers
 
@@ -63,13 +52,11 @@ If you wish to run the development servers for better debugging and DX, you can 
 For the API:
 
 ```
-# from inside the `airo_api` container
-composer run dev
+docker exec -it airo_api composer run dev
 ```
 
 For the client:
 
 ```
-# from inside the `airo_client` container
-npm run start
+docker exec -it airo_client npm run start
 ```

@@ -57,6 +57,18 @@ export class QuotationComponent implements OnInit {
     return this.quotationForm.get('ages') as FormArray;
   }
 
+  get currency() {
+    return this.quotationForm.get('currency_id');
+  }
+
+  get startDate() {
+    return this.quotationForm.get('start_date');
+  }
+
+  get endDate() {
+    return this.quotationForm.get('end_date');
+  }
+
   addAge() {
     this.ages.push(new FormControl('', [Validators.required]));
   }
@@ -76,6 +88,7 @@ export class QuotationComponent implements OnInit {
         .subscribe({
           next: (res) => {
             this.quotation.set(res);
+            this.formError.set('');
           },
           error: (error) => {
             this.formError.set(error.error.message);

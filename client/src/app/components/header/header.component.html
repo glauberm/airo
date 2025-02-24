@@ -1,7 +1,13 @@
-<header class="header">
-  <span class="header__heading">AIRO</span>
+<nav class="navbar navbar-expand bg-body-tertiary">
+  <div class="container">
+    <div class="navbar-brand"><strong>AIRO</strong></div>
 
-  @if (hasToken()) {
-  <app-logout></app-logout>
-  }
-</header>
+    <div class="collapse navbar-collapse">
+      <div class="ms-auto">
+        @if (hasToken()) {
+        <app-logout></app-logout>
+        }
+      </div>
+    </div>
+  </div>
+</nav>

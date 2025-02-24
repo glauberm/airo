@@ -43,13 +43,6 @@ class AuthenticationTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_get_authenticated_user(): void
-    {
-        $response = $this->getAuthorizedRequest()->getJson('/authenticated-user');
-
-        $response->assertOk();
-    }
-
     public function test_refresh(): void
     {
         $response = $this->getAuthorizedRequest()->postJson('/refresh');

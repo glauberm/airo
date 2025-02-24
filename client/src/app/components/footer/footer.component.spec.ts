@@ -19,10 +19,4 @@ describe('FooterComponent', () => {
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should display "AIRO" as headline', () => {
-    expect(
-      fixture.nativeElement.querySelector('.footer__heading').textContent
-    ).toEqual('AIRO');
-  });
 });

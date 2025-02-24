@@ -1,37 +1,110 @@
 <form [formGroup]="quotationForm" (ngSubmit)="onSubmit()">
   @if (formError()) {
-  <p>{{ formError() }}</p>
+  <div class="alert alert-danger" role="alert">
+    {{ formError() }}
+  </div>
   }
 
-  <fieldset formArrayName="ages">
-    <legend>Age(s)</legend>
+  <fieldset class="mb-3" formArrayName="ages">
+    <legend class="form-label fs-6">Age(s)</legend>
     @for (age of ages.controls; track age; let i = $index) {
-    <label for="age-{{ i }}">Age #{{ i }}</label>
-    <input
-      type="text"
-      id="age-{{ i }}"
-      [formControlName]="i"
-      inputmode="numeric"
-    />
-    <button type="button" (click)="removeAge(i)">Remove</button>
+    <label for="age-{{ i }}" class="visually-hidden">Age #{{ i }}</label>
+    <div class="input-group mb-2">
+      <input
+        type="text"
+        id="age-{{ i }}"
+        inputmode="numeric"
+        class="form-control"
+        [formControlName]="i"
+        [class.is-invalid]="age?.hasError('required')"
+      />
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="removeAge(i)"
+      >
+        Remove
+      </button>
+      @if (age?.hasError('required')) {
+      <div class="invalid-feedback">Age is required.</div>
+      }
+    </div>
     }
-    <button type="button" (click)="addAge()">Add age</button>
+    <button
+      type="button"
+      class="btn btn-sm btn-outline-secondary"
+      (click)="addAge()"
+    >
+      Add age
+    </button>
   </fieldset>
 
-  <label for="currency">Currency</label>
-  <select id="currency" formControlName="currency_id">
-    @for (currency of currencies().data; track currency.id) {
-    <option [value]="currency.id" selected>
-      {{ currency.id }}
-    </option>
+  <div class="mb-3">
+    <label for="currency" class="form-label">Currency</label>
+    <select
+      id="currency"
+      class="form-select"
+      formControlName="currency_id"
+      [class.is-invalid]="currency?.hasError('required')"
+    >
+      @for (currency of currencies().data; track currency.id) {
+      <option [value]="currency.id" selected>
+        {{ currency.id }}
+      </option>
+      }
+    </select>
+    @if (currency?.hasError('required')) {
+    <div class="invalid-feedback">Currency is required.</div>
     }
-  </select>
+  </div>
 
-  <label for="start_date">Start date</label>
-  <input type="date" id="start_date" formControlName="start_date" />
+  <div class="mb-3">
+    <label for="start_date" class="form-label">Start date</label>
+    <input
+      type="date"
+      id="start_date"
+      class="form-control"
+      formControlName="start_date"
+      [class.is-invalid]="startDate?.hasError('required')"
+    />
+    @if (startDate?.hasError('required')) {
+    <div class="invalid-feedback">Start date is required.</div>
+    }
+  </div>
 
-  <label for="end_date">End date</label>
-  <input type="date" id="end_date" formControlName="end_date" />
+  <div class="mb-3">
+    <label for="end_date" class="form-label">End date</label>
+    <input
+      type="date"
+      id="end_date"
+      class="form-control"
+      formControlName="end_date"
+      [class.is-invalid]="endDate?.hasError('required')"
+    />
+    @if (endDate?.hasError('required')) {
+    <div class="invalid-feedback">End date is required.</div>
+    }
+  </div>
 
-  <button type="submit">Submit</button>
+  <button
+    type="submit"
+    class="btn btn-lg btn-primary"
+    [class.mb-3]="quotation()"
+  >
+    Submit
+  </button>
+
+  @if (quotation()) {
+  <div class="alert alert-info" role="alert">
+    <small><strong>Total:</strong> {{ quotation()?.data?.total }}</small
+    ><br />
+    <small
+      ><strong>Currency:</strong> {{ quotation()?.data?.currency_id }}</small
+    ><br />
+    <small
+      ><strong>Quotation ID:</strong>
+      {{ quotation()?.data?.quotation_id }}</small
+    >
+  </div>
+  }
 </form>

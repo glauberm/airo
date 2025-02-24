@@ -1,19 +1,40 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <label for="email">Email: </label>
-  <input type="email" id="email" formControlName="email" />
+  <div class="alert alert-info" role="alert">
+    <small><strong>Email: </strong> glauber&#64;airosoftware.com</small><br />
+    <small><strong>Password: </strong> password</small>
+  </div>
 
-  @if (email?.hasError('required')) {
-  <span>Name is required.</span>
-  } @if (email?.hasError('email')) {
-  <span>Must be a valid email.</span>
-  }
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input
+      type="email"
+      id="email"
+      class="form-control"
+      formControlName="email"
+      [class.is-invalid]="
+        email?.hasError('required') || email?.hasError('email')
+      "
+    />
+    @if (email?.hasError('required')) {
+    <div class="invalid-feedback">Email is required.</div>
+    } @if (email?.hasError('email')) {
+    <div class="invalid-feedback">Must be a valid email.</div>
+    }
+  </div>
 
-  <label for="password">Password: </label>
-  <input type="password" id="password" formControlName="password" />
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input
+      type="password"
+      id="password"
+      class="form-control"
+      formControlName="password"
+      [class.is-invalid]="password?.hasError('required')"
+    />
+    @if (password?.hasError('required')) {
+    <div class="invalid-feedback">Password is required.</div>
+    }
+  </div>
 
-  @if (password?.hasError('required')) {
-  <span>Password is required.</span>
-  }
-
-  <button type="submit">Login</button>
+  <button class="btn btn-lg btn-primary" type="submit">Login</button>
 </form>
