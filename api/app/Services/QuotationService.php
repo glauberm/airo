@@ -51,8 +51,8 @@ class QuotationService
     }
 
     /**
-     * @param  int[] $ages
-     * @param  EloquentCollection<int,Age> $agesModels
+     * @param  int[]  $ages
+     * @param  EloquentCollection<int,Age>  $agesModels
      * @return Collection<int,Age>
      */
     private function ensureDuplicatedAges(array $ages, EloquentCollection $agesModels): Collection
