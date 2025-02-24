@@ -19,7 +19,11 @@ class QuotationRequest extends FormRequest
             'age.*' => ['required', 'integer', Rule::exists('ages', 'age')],
             'currency_id' => ['required', Rule::exists('currencies', 'id')],
             'start_date' => ['required', Rule::date()->format('Y-m-d')],
-            'end_date' => ['required', Rule::date()->format('Y-m-d')],
+            'end_date' => [
+                'required',
+                Rule::date()->format('Y-m-d'),
+                Rule::date()->afterOrEqual('start_date'),
+            ],
         ];
     }
 
