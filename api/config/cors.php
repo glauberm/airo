@@ -19,7 +19,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        env('APP_CLIENT_URL', 'http://localhost:8081'),
+        env('APP_CLIENT_DEV_URL', 'http://localhost:4200')
+    ],
 
     'allowed_origins_patterns' => [],
 

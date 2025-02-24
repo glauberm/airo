@@ -28,7 +28,7 @@ export class QuotationComponent implements OnInit {
       ],
       [Validators.required]
     ),
-    currency_id: new FormControl('', [Validators.required]),
+    currency_id: new FormControl('EUR', [Validators.required]),
     start_date: new FormControl('2020-10-01', [Validators.required]),
     end_date: new FormControl('2020-10-30', [Validators.required]),
   });

@@ -1,4 +1,10 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  @if (formError()) {
+  <div class="alert alert-danger" role="alert">
+    {{ formError() }}
+  </div>
+  }
+
   <div class="alert alert-info" role="alert">
     <small><strong>Email: </strong> glauber&#64;airosoftware.com</small><br />
     <small><strong>Password: </strong> password</small>

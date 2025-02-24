@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -15,6 +15,8 @@ import { AuthService } from '../../_services/auth.service';
   imports: [ReactiveFormsModule],
 })
 export class LoginComponent {
+  public formError = signal<string>('');
+
   public loginForm = new FormGroup({
     email: new FormControl('glauber@airosoftware.com', [
       Validators.required,
@@ -37,9 +39,14 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
 
-      this.authService.login(email, password).subscribe((res) => {
-        this.authService.setToken(res.token);
-        this.router.navigate(['']);
+      this.authService.login(email, password).subscribe({
+        next: (res) => {
+          this.authService.setToken(res.token);
+          this.router.navigate(['']);
+        },
+        error: (error) => {
+          this.formError.set(error.error.message);
+        },
       });
     }
   }

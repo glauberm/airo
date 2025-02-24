@@ -12,7 +12,12 @@ Install the API dependencies:
 
 ```
 docker exec -it airo_api composer install
+```
 
+Setup the API:
+
+```
+docker exec -it airo_api composer run setup
 ```
 
 Install the client dependencies:
@@ -43,7 +48,7 @@ For the client:
 docker exec -it airo_client npm run test
 ```
 
-Visit [localhost:9876](http://localhost:9876/) to access Karma server.
+Visit [localhost:9876](http://localhost:9876/) to access the Karma server.
 
 ## Running the development servers
 
@@ -55,8 +60,12 @@ For the API:
 docker exec -it airo_api composer run dev
 ```
 
+Visit [localhost:8000](http://localhost:8000/).
+
 For the client:
 
 ```
 docker exec -it airo_client npm run start
 ```
+
+Visit [localhost:4200](http://localhost:4200/).

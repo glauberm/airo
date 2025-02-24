@@ -36,5 +36,8 @@ COPY . /var/www/html/api
 RUN useradd -ms /bin/bash nginx
 RUN chown -R nginx:nginx /var/www/html/api
 
+# Switch to nginx user
+USER nginx
+
 # Set working directory
 WORKDIR /var/www/html/api
