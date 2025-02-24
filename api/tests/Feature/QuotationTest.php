@@ -54,4 +54,18 @@ class QuotationTest extends TestCase
 
         $response->assertUnprocessable();
     }
+
+    public function test_duplicated_age(): void
+    {
+        $this->seed([AgeSeeder::class, CurrencySeeder::class]);
+
+        $response = $this->getAuthorizedRequest()->postJson('/quotation', [
+            'age' => '70,70',
+            'currency_id' => 'EUR',
+            'start_date' => '2020-10-01',
+            'end_date' => '2020-10-30',
+        ]);
+
+        $response->assertJson(['data' => ['total' => 180]]);
+    }
 }

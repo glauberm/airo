@@ -8,6 +8,8 @@ use App\Models\Age;
 use App\Models\Currency;
 use App\Models\Quotation;
 use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection;
 
 class QuotationService
 {
@@ -30,6 +32,8 @@ class QuotationService
 
         $ages = Age::whereIn('age', $age)->get();
 
+        $ages = $this->ensureDuplicatedAges($age, $ages);
+
         foreach ($ages as $age) {
             $value = $this->calculateValue((float) $age->load, $quotation->start_date, $quotation->end_date);
 
@@ -44,5 +48,21 @@ class QuotationService
         $numOfDays = $startDate->startOfDay()->diffInDays($endDate->endOfDay(), true);
 
         return round(self::FIXED_RATE * $load * ceil($numOfDays));
+    }
+
+    /**
+     * @param  int[] $ages
+     * @param  EloquentCollection<int,Age> $agesModels
+     * @return Collection<int,Age>
+     */
+    private function ensureDuplicatedAges(array $ages, EloquentCollection $agesModels): Collection
+    {
+        $withPossibleDuplicates = collect();
+
+        foreach ($ages as $age) {
+            $withPossibleDuplicates->push($agesModels->firstWhere('age', $age));
+        }
+
+        return $withPossibleDuplicates;
     }
 }
