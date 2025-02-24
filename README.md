@@ -5,7 +5,7 @@
 Build and start the containers:
 
 ```
-docker compose up
+docker compose up -d
 ```
 
 Install the API dependencies:
